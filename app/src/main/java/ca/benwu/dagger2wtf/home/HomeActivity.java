@@ -1,44 +1,40 @@
 package ca.benwu.dagger2wtf.home;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
+import ca.benwu.dagger2wtf.activity.BaseActivity;
 import ca.benwu.dagger2wtf.R;
-import ca.benwu.dagger2wtf.application.WtfApplication;
-import ca.benwu.dagger2wtf.repositories.ApiRepository;
-import dagger.Component;
+import ca.benwu.dagger2wtf.network.NetworkService;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
+
+    @Inject
+    HomeAdapter mHomeAdapter;
+    @Inject
+    RecyclerView.LayoutManager mLayoutManager;
+    @Inject
+    NetworkService mNetworkService;
 
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
     private Disposable mDisposable;
-    @Inject HomeAdapter mHomeAdapter;
-    @Inject RecyclerView.LayoutManager mLayoutManager;
-    @Inject ApiRepository mApiRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
 
-        DaggerHomeActivityComponent.builder()
-                .homeActivityModule(new HomeActivityModule(this))
-                .build()
-                .inject(this);
+        mApplication.getHomeComponent(this).inject(this);
+
+        setContentView(R.layout.activity_home);
 
         initViews();
         initRecyclerView();
@@ -70,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        mApiRepo.getPosts()
+        mNetworkService.getPosts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

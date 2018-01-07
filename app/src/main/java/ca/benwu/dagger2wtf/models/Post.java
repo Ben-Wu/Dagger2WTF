@@ -2,10 +2,10 @@ package ca.benwu.dagger2wtf.models;
 
 public class Post {
 
-    int userId;
-    int id;
-    String title;
-    String body;
+    private int userId;
+    private int id;
+    private String title;
+    private String body;
 
     public int getUserId() {
         return userId;
