@@ -24,6 +24,7 @@ public class WtfApplication extends Application {
                 .networkModule(new NetworkModule(BASE_URL))
                 .build();
         mAppComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
                 .networkComponent(mNetworkComponent)
                 .build();
     }

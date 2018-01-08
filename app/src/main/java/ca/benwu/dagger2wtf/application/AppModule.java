@@ -1,5 +1,8 @@
 package ca.benwu.dagger2wtf.application;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -18,6 +21,12 @@ public class AppModule {
     @Provides
     WtfApplication provideApplication() {
         return mApplication;
+    }
+
+    @Singleton
+    @Provides
+    SharedPreferences provideSharedPrefs() {
+        return PreferenceManager.getDefaultSharedPreferences(mApplication);
     }
 
 }

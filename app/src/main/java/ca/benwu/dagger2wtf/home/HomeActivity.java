@@ -1,5 +1,6 @@
 package ca.benwu.dagger2wtf.home;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -38,7 +39,9 @@ public class HomeActivity extends BaseActivity {
 
         initViews();
         initRecyclerView();
-        loadData();
+        if (savedInstanceState == null) {
+            loadData();
+        }
         mHomeAdapter.getClickSubject().subscribe(
                 post -> Toast.makeText(
                         this,
@@ -50,6 +53,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mRecyclerView.setLayoutManager(null);
         if (mDisposable != null && !mDisposable.isDisposed()) {
             mDisposable.dispose();
         }
@@ -66,12 +70,15 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void loadData() {
+        mRecyclerView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
         mNetworkService.getPosts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         posts -> {
                             mHomeAdapter.add(posts);
+                            mRecyclerView.setVisibility(View.VISIBLE);
                             mProgressBar.setVisibility(View.GONE);
                         },
                         throwable -> Toast.makeText(

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import ca.benwu.dagger2wtf.activity.ActivityScope;
 import dagger.Module;
 import dagger.Provides;
 
@@ -18,11 +19,13 @@ public class HomeModule {
         mContext = context;
     }
 
+    @ActivityScope
     @Provides
     RecyclerView.LayoutManager layoutManager() {
         return new LinearLayoutManager(mContext);
     }
 
+    @ActivityScope
     @Provides
     HomeAdapter homeAdapter() {
         return new HomeAdapter(new ArrayList<>());
