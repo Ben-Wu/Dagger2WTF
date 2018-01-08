@@ -1,4 +1,4 @@
-package ca.benwu.dagger2wtf.home;
+package ca.benwu.dagger2wtf.comments;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,11 +9,11 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class HomeModule {
+public class CommentModule {
 
     private final Context mContext;
 
-    public HomeModule(Context context) {
+    public CommentModule(Context context) {
         mContext = context;
     }
 
@@ -25,8 +25,8 @@ public class HomeModule {
 
     @ActivityScope
     @Provides
-    HomeAdapter provideHomeAdapter() {
-        return new HomeAdapter();
+    CommentAdapter provideCommentAdapter() {
+        return new CommentAdapter();
     }
 
 }

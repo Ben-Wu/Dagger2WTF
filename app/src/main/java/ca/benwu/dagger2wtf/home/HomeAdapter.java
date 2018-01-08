@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.benwu.dagger2wtf.R;
@@ -18,6 +19,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeViewHolder> {
     private LayoutInflater mLayoutInflater;
     private Subject<Post> mClickSubject;
     private List<Post> mPosts;
+
+    public HomeAdapter() {
+        this(new ArrayList<>());
+    }
 
     public HomeAdapter(@NonNull List<Post> posts) {
         mPosts = posts;

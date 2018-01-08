@@ -3,6 +3,8 @@ package ca.benwu.dagger2wtf.application;
 import android.app.Application;
 import android.content.Context;
 
+import ca.benwu.dagger2wtf.comments.CommentComponent;
+import ca.benwu.dagger2wtf.comments.CommentModule;
 import ca.benwu.dagger2wtf.home.HomeComponent;
 import ca.benwu.dagger2wtf.home.HomeModule;
 import ca.benwu.dagger2wtf.network.DaggerNetworkComponent;
@@ -16,6 +18,7 @@ public class WtfApplication extends Application {
     private AppComponent mAppComponent;
     private NetworkComponent mNetworkComponent;
     private HomeComponent mHomeComponent;
+    private CommentComponent mCommentComponent;
 
     @Override
     public void onCreate() {
@@ -35,4 +38,12 @@ public class WtfApplication extends Application {
         }
         return mHomeComponent;
     }
+
+    public CommentComponent getCommentComponent(Context context) {
+        if (mCommentComponent == null) {
+            mCommentComponent = mAppComponent.plus(new CommentModule(context));
+        }
+        return mCommentComponent;
+    }
+
 }
