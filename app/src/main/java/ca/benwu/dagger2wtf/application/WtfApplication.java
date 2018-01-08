@@ -34,14 +34,18 @@ public class WtfApplication extends Application {
 
     public HomeComponent getHomeComponent(Context context) {
         if (mHomeComponent == null) {
-            mHomeComponent = mAppComponent.plus(new HomeModule(context));
+            mHomeComponent = mAppComponent.homeComponentBuilder()
+                    .homeModule(new HomeModule(context))
+                    .build();
         }
         return mHomeComponent;
     }
 
     public CommentComponent getCommentComponent(Context context) {
         if (mCommentComponent == null) {
-            mCommentComponent = mAppComponent.plus(new CommentModule(context));
+            mCommentComponent = mAppComponent.commentComponentBuilder()
+                    .commentModule(new CommentModule(context))
+                    .build();
         }
         return mCommentComponent;
     }

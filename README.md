@@ -2,6 +2,15 @@
 
 <b>W</b>orking <b>T</b>echnical <b>F</b>oundations for Dagger 2
 
+### Components
+
+### Modules
+
+### Injection
+
+### Component Dependencies
+
+### Subcomponents
 
 ### Named Qualifier
 

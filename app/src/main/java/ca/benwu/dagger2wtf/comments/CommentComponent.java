@@ -7,6 +7,12 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {CommentModule.class})
 public interface CommentComponent {
 
+    @Subcomponent.Builder
+    interface builder {
+        CommentComponent.builder commentModule(CommentModule commentModule);
+        CommentComponent build();
+    }
+
     void inject(CommentActivity commentActivity);
 
 }
