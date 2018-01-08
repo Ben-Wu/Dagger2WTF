@@ -3,11 +3,14 @@ package ca.benwu.dagger2wtf.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import ca.benwu.dagger2wtf.R;
 import ca.benwu.dagger2wtf.activity.BaseActivity;
@@ -23,7 +26,11 @@ public class HomeActivity extends BaseActivity {
     @Inject
     HomeAdapter mHomeAdapter;
     @Inject
-    RecyclerView.LayoutManager mLayoutManager;
+    @Named("Linear")
+    RecyclerView.LayoutManager mLinearLayoutManager;
+    @Inject
+    @Named("Grid")
+    RecyclerView.LayoutManager mGridLayoutManager;
     @Inject
     NetworkService mNetworkService;
 
@@ -66,6 +73,22 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.toggle_layout:
+                toggleLayout();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initViews() {
         mRecyclerView = findViewById(R.id.home_post_feed);
         mProgressBar = findViewById(R.id.home_loading);
@@ -73,7 +96,12 @@ public class HomeActivity extends BaseActivity {
 
     private void initRecyclerView() {
         mRecyclerView.setAdapter(mHomeAdapter);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+    }
+
+    private void toggleLayout() {
+        mRecyclerView.setLayoutManager(mRecyclerView.getLayoutManager() == mLinearLayoutManager ?
+                mGridLayoutManager : mLinearLayoutManager);
     }
 
     private void loadData() {
