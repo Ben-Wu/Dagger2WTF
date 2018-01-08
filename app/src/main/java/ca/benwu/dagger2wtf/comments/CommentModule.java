@@ -25,7 +25,7 @@ public class CommentModule {
 
     @ActivityScope
     @Provides
-    CommentAdapter provideCommentAdapter() {
+    static CommentAdapter provideCommentAdapter() {
         return new CommentAdapter();
     }
 

@@ -25,7 +25,7 @@ public class HomeModule {
 
     @ActivityScope
     @Provides
-    HomeAdapter provideHomeAdapter() {
+    static HomeAdapter provideHomeAdapter() {
         return new HomeAdapter();
     }
 
