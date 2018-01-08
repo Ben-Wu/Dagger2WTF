@@ -17,6 +17,7 @@ import ca.benwu.dagger2wtf.activity.BaseActivity;
 import ca.benwu.dagger2wtf.comments.CommentActivity;
 import ca.benwu.dagger2wtf.network.NetworkService;
 import ca.benwu.dagger2wtf.utils.Constants;
+import dagger.Lazy;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -27,10 +28,10 @@ public class HomeActivity extends BaseActivity {
     HomeAdapter mHomeAdapter;
     @Inject
     @Named("Linear")
-    RecyclerView.LayoutManager mLinearLayoutManager;
+    Lazy<RecyclerView.LayoutManager> mLinearLayoutManager;
     @Inject
     @Named("Grid")
-    RecyclerView.LayoutManager mGridLayoutManager;
+    Lazy<RecyclerView.LayoutManager> mGridLayoutManager;
     @Inject
     NetworkService mNetworkService;
 
@@ -96,12 +97,14 @@ public class HomeActivity extends BaseActivity {
 
     private void initRecyclerView() {
         mRecyclerView.setAdapter(mHomeAdapter);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager.get());
     }
 
     private void toggleLayout() {
-        mRecyclerView.setLayoutManager(mRecyclerView.getLayoutManager() == mLinearLayoutManager ?
-                mGridLayoutManager : mLinearLayoutManager);
+        mRecyclerView.setLayoutManager(
+                mRecyclerView.getLayoutManager() == mLinearLayoutManager.get()
+                        ? mGridLayoutManager.get()
+                        : mLinearLayoutManager.get());
     }
 
     private void loadData() {
