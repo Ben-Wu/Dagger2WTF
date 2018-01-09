@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,11 +14,12 @@ import ca.benwu.dagger2wtf.R;
 import ca.benwu.dagger2wtf.activity.BaseActivity;
 import ca.benwu.dagger2wtf.network.NetworkService;
 import ca.benwu.dagger2wtf.utils.Constants;
+import ca.benwu.dagger2wtf.utils.ParentUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class CommentActivity extends BaseActivity{
+public class CommentActivity extends BaseActivity {
 
     @Inject
     RecyclerView.LayoutManager mLayoutManager;
@@ -25,10 +27,13 @@ public class CommentActivity extends BaseActivity{
     CommentAdapter mCommentAdapter;
     @Inject
     NetworkService mNetworkService;
+    @Inject
+    ParentUtils mParentUtils; // trivial example of @Binds and constructor injection
 
     private Disposable mDisposable;
 
     private RecyclerView mCommentsView;
+    private View mLoadingView;
 
     private int mPostId;
 
@@ -56,6 +61,8 @@ public class CommentActivity extends BaseActivity{
         mCommentsView.addItemDecoration(new DividerItemDecoration(
                 mCommentsView.getContext(), DividerItemDecoration.VERTICAL));
 
+        mLoadingView = findViewById(R.id.comments_loading);
+
         if (savedInstanceState == null) {
             loadData();
         }
@@ -71,12 +78,16 @@ public class CommentActivity extends BaseActivity{
     }
 
     private void loadData() {
+        mCommentsView.setVisibility(View.GONE);
+        mLoadingView.setVisibility(View.VISIBLE);
         mNetworkService.getComments(mPostId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         comments -> {
                             mCommentAdapter.setComments(comments);
+                            mCommentsView.setVisibility(View.VISIBLE);
+                            mLoadingView.setVisibility(View.GONE);
                         },
                         throwable -> Toast.makeText(
                                 this, throwable.getMessage(), Toast.LENGTH_LONG).show(),

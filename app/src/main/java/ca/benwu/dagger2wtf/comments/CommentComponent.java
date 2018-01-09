@@ -4,7 +4,7 @@ import ca.benwu.dagger2wtf.activity.ActivityScope;
 import dagger.Subcomponent;
 
 @ActivityScope
-@Subcomponent(modules = {CommentModule.class})
+@Subcomponent(modules = {CommentModule.class, CommentUtilsModule.class})
 public interface CommentComponent {
 
     @Subcomponent.Builder

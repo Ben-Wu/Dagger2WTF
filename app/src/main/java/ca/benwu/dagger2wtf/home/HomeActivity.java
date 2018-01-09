@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import javax.inject.Inject;
@@ -17,6 +16,7 @@ import ca.benwu.dagger2wtf.activity.BaseActivity;
 import ca.benwu.dagger2wtf.comments.CommentActivity;
 import ca.benwu.dagger2wtf.network.NetworkService;
 import ca.benwu.dagger2wtf.utils.Constants;
+import ca.benwu.dagger2wtf.utils.ParentUtils;
 import dagger.Lazy;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -34,9 +34,11 @@ public class HomeActivity extends BaseActivity {
     Lazy<RecyclerView.LayoutManager> mGridLayoutManager;
     @Inject
     NetworkService mNetworkService;
+    @Inject
+    ParentUtils mParentUtils;
 
     private RecyclerView mRecyclerView;
-    private ProgressBar mProgressBar;
+    private View mLoadingView;
     private Disposable mDisposable;
 
     @Override
@@ -92,7 +94,7 @@ public class HomeActivity extends BaseActivity {
 
     private void initViews() {
         mRecyclerView = findViewById(R.id.home_post_feed);
-        mProgressBar = findViewById(R.id.home_loading);
+        mLoadingView = findViewById(R.id.home_loading);
     }
 
     private void initRecyclerView() {
@@ -109,7 +111,7 @@ public class HomeActivity extends BaseActivity {
 
     private void loadData() {
         mRecyclerView.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
+        mLoadingView.setVisibility(View.VISIBLE);
         mNetworkService.getPosts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -117,7 +119,7 @@ public class HomeActivity extends BaseActivity {
                         posts -> {
                             mHomeAdapter.add(posts);
                             mRecyclerView.setVisibility(View.VISIBLE);
-                            mProgressBar.setVisibility(View.GONE);
+                            mLoadingView.setVisibility(View.GONE);
                         },
                         throwable -> Toast.makeText(
                                 this, throwable.getMessage(), Toast.LENGTH_LONG).show(),

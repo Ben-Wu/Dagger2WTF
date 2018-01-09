@@ -11,7 +11,6 @@ import ca.benwu.dagger2wtf.application.WtfApplication;
 
 public abstract class BaseActivity extends AppCompatActivity{
 
-    @Inject
     protected WtfApplication mApplication;
     @Inject
     protected SharedPreferences mSharedPrefs;
@@ -19,6 +18,6 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mApplication = (WtfApplication) getApplication();
+        mApplication = WtfApplication.getInstance();
     }
 }

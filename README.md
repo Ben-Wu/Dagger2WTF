@@ -18,7 +18,26 @@ The `@Named` qualifier allows a module to provide multiple dependencies
 of the same type.
 
 [Provides example](/app/src/main/java/ca/benwu/dagger2wtf/home/HomeModule.java#L25)
+
 [Inject example](/app/src/main/java/ca/benwu/dagger2wtf/home/HomeActivity.java#L30)
+
+### Constructor Injection
+
+The constructor of an object can be annotated with `@Inject` so that a
+module can use it as an argument to one of its objects.  The annotated
+objects should be scoped to make it clear where they go in the graph.
+
+[Annotated Constructor](/app/src/main/java/ca/benwu/dagger2wtf/utils/Child1Utils.java)
+
+[Provides Example](/app/src/main/java/ca/benwu/dagger2wtf/home/HomeModule.java#L28)
+
+### Binds Annotation
+
+`@Binds` can be used instead of provides if the provided object has an
+`@Inject`-annotated constructor.  This reduces code in the module.  The
+module must be abstract and can only use `@Provide` with static objects.
+
+[Example](/app/src/main/java/ca/benwu/dagger2wtf/comments/CommentUtilsModule.java)
 
 ### Lazy Initialization
 

@@ -15,6 +15,8 @@ public class WtfApplication extends Application {
 
     private static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
 
+    private static WtfApplication instance;
+
     private AppComponent mAppComponent;
     private NetworkComponent mNetworkComponent;
     private HomeComponent mHomeComponent;
@@ -23,6 +25,7 @@ public class WtfApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         mNetworkComponent = DaggerNetworkComponent.builder()
                 .networkModule(new NetworkModule(BASE_URL))
                 .build();
@@ -30,6 +33,10 @@ public class WtfApplication extends Application {
                 .appModule(new AppModule(this))
                 .networkComponent(mNetworkComponent)
                 .build();
+    }
+
+    public static WtfApplication getInstance() {
+        return instance;
     }
 
     public HomeComponent getHomeComponent(Context context) {
