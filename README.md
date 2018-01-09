@@ -2,15 +2,54 @@
 
 <b>W</b>orking <b>T</b>echnical <b>F</b>oundations for Dagger 2
 
-### Components
+This is a project that demonstrates usage of [Dagger 2](https://google.github.io/dagger/).
+There are working examples of many of the features of Dagger.
+
+[Official Dagger Documentation](https://google.github.io/dagger/api/2.0/)
 
 ### Modules
 
-### Injection
+Class that contributes objects to the dependency graph.  Methods are
+annotated with `@Provides` to indicate that they contribute a dependency.
+
+[Example](/app/src/main/java/ca/benwu/dagger2wtf/home/HomeModule.java)
+
+[Example](/app/src/main/java/ca/benwu/dagger2wtf/network/NetworkModule.java)
+
+### Components
+
+Interface or abstract class connecting a module with an injection target.
+
+[Example](app\src\main\java\ca\benwu\dagger2wtf\application\AppComponent.java)
 
 ### Component Dependencies
 
+Components can be dependent on other components, allowing them to use
+those bindings.  The dependent component can only use bindings exposed
+by the other component.  Scoped components cannot depend on unscoped
+components.
+
+e.g.: [AppComponent](app\src\main\java\ca\benwu\dagger2wtf\application\AppComponent.java)
+is dependent on
+[NetworkComponent](\app\src\main\java\ca\benwu\dagger2wtf\network\NetworkComponent.java)
+
 ### Subcomponents
+
+A subcomponent is a component that inherits all the bindings of its
+parent.  The parent must know of its subcomponents so the parent and
+subcomponent are tightly coupled.
+
+e.g.: [HomeComponent](app\src\main\java\ca\benwu\dagger2wtf\home\HomeComponent.java)
+is a subcomponent of
+[AppComponent](app\src\main\java\ca\benwu\dagger2wtf\application\AppComponent.java)
+
+### Scope
+
+Components and bindings can be scoped so they are only instantiated the
+appropriate number of times.  e.g. `@Singleton` means only one instantiation
+per app.  Scoped components can only use same scoped or unscoped bindings.
+
+[Custom scopes](app/src/main/java/ca/benwu/dagger2wtf/activity/ActivityScope.java) can also be used.
 
 ### Named Qualifier
 
