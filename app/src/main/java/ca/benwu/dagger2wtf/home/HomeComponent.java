@@ -1,18 +1,12 @@
 package ca.benwu.dagger2wtf.home;
 
-import ca.benwu.dagger2wtf.activity.ActivityScope;
-import dagger.Subcomponent;
+import ca.benwu.dagger2wtf.activity.ScreenScope;
+import dagger.Component;
 
-@ActivityScope
-@Subcomponent(modules = {HomeModule.class})
+@ScreenScope
+@Component
 public interface HomeComponent {
 
-    @Subcomponent.Builder
-    interface builder {
-        HomeComponent.builder homeModule(HomeModule homeModule);
-        HomeComponent build();
-    }
-
-    void inject(HomeActivity homeActivity);
+    //void inject(HomeActivity homeActivity);
 
 }

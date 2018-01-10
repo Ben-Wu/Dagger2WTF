@@ -1,6 +1,5 @@
 package ca.benwu.dagger2wtf.comments;
 
-import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -11,16 +10,10 @@ import dagger.Provides;
 @Module
 public class CommentModule {
 
-    private final Context mContext;
-
-    public CommentModule(Context context) {
-        mContext = context;
-    }
-
     @ActivityScope
     @Provides
-    RecyclerView.LayoutManager provideLayoutManager() {
-        return new LinearLayoutManager(mContext);
+    RecyclerView.LayoutManager provideLayoutManager(CommentActivity commentActivity) {
+        return new LinearLayoutManager(commentActivity);
     }
 
     @ActivityScope

@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 import ca.benwu.dagger2wtf.application.WtfApplication;
 
-public abstract class BaseActivity extends AppCompatActivity{
+public abstract class BaseActivity extends AppCompatActivity {
 
     protected WtfApplication mApplication;
     @Inject
@@ -18,6 +18,6 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mApplication = WtfApplication.getInstance();
+        mApplication = (WtfApplication) getApplication();
     }
 }

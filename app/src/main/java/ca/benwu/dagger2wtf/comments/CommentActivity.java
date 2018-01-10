@@ -15,6 +15,7 @@ import ca.benwu.dagger2wtf.activity.BaseActivity;
 import ca.benwu.dagger2wtf.network.NetworkService;
 import ca.benwu.dagger2wtf.utils.Constants;
 import ca.benwu.dagger2wtf.utils.ParentUtils;
+import dagger.android.AndroidInjection;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -39,10 +40,9 @@ public class CommentActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
-
-        mApplication.getCommentComponent(this).inject(this);
 
         Intent intent = getIntent();
         mPostId = intent.getIntExtra(Constants.EXTRA_POST_ID, -1);

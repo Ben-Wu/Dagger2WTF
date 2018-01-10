@@ -1,6 +1,5 @@
 package ca.benwu.dagger2wtf.home;
 
-import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,24 +16,18 @@ import dagger.Provides;
 @Module
 public class HomeModule {
 
-    private final Context mContext;
-
-    public HomeModule(Context context) {
-        mContext = context;
-    }
-
     @ActivityScope
     @Provides
     @Named("Linear")
-    RecyclerView.LayoutManager provideLinearLayoutManager() {
-        return new LinearLayoutManager(mContext);
+    RecyclerView.LayoutManager provideLinearLayoutManager(HomeActivity activity) {
+        return new LinearLayoutManager(activity);
     }
 
     @ActivityScope
     @Provides
     @Named("Grid")
-    RecyclerView.LayoutManager provideGridLayoutManager() {
-        return new GridLayoutManager(mContext, 2);
+    RecyclerView.LayoutManager provideGridLayoutManager(HomeActivity activity) {
+        return new GridLayoutManager(activity, 2);
     }
 
     @ActivityScope

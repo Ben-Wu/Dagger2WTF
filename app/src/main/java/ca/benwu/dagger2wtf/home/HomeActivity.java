@@ -18,6 +18,7 @@ import ca.benwu.dagger2wtf.network.NetworkService;
 import ca.benwu.dagger2wtf.utils.Constants;
 import ca.benwu.dagger2wtf.utils.ParentUtils;
 import dagger.Lazy;
+import dagger.android.AndroidInjection;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -43,10 +44,8 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-
-        mApplication.getHomeComponent(this).inject(this);
-
         setContentView(R.layout.activity_home);
 
         initViews();
