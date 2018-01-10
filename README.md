@@ -7,6 +7,12 @@ There are working examples of many of the features of Dagger.
 
 [Official Dagger Documentation](https://google.github.io/dagger/api/2.0/)
 
+This project uses the general Dagger injection methods instead of the 
+`dagger.android` method.  The `dagger.android` method is used in 
+[this branch](https://github.com/Ben-Wu/Dagger2WTF/tree/dagger-android/app/src/main/java/ca/benwu/dagger2wtf).
+
+## Overview
+
 ### Modules
 
 Class that contributes objects to the dependency graph.  Methods are
